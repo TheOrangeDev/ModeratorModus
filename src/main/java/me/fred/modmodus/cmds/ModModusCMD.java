@@ -29,21 +29,15 @@ public class ModModusCMD implements CommandExecutor {
                         slot++;
                         if (!(is[i] == null))
                             ((Player) p).getInventory().setItem(slot, is[i]);
-                        System.out.println(slot);
+
                     }
                     InvManager.inventory.remove(((Player) p).getUniqueId());
                 } else {
-
-                    //methods
-
                     mods.add((Player) p);
                     Logger.sendPlayerMessage((Player) p, "Du bist im modmodus!");
 
-
                     InvManager.inventory.put(((Player) p).getUniqueId(), ((Player) p).getInventory().getContents());
                     ((Player) p).getInventory().clear();
-
-                    System.out.println(InvManager.inventory.get(((Player) p).getUniqueId()));
                 }
             } else {
                 Logger.sendPlayerError((Player) p, "Du darfst das nicht!");

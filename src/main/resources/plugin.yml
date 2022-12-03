@@ -1,0 +1,10 @@
+name: ModModus
+version: '${project.version}'
+main: me.fred.modmodus.ModModus
+api-version: 1.19
+authors: [ Fred ]
+commands:
+  modmodus:
+    description: Starte den modmodus
+    usage: /modmodus
+    permission: modmodus.use

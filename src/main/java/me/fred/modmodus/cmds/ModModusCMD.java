@@ -2,6 +2,7 @@ package me.fred.modmodus.cmds;
 
 import me.fred.modmodus.logger.Logger;
 import me.fred.modmodus.utils.InvManager;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +21,7 @@ public class ModModusCMD implements CommandExecutor {
             if (p.hasPermission("modmodus.use")) {
                 if (mods.contains(p)) {
                     mods.remove(p);
-                    Logger.sendPlayerMessage((Player) p, "Du bist nun nicht mehr im modmodus!");
+                    Logger.sendPlayerMessage((Player) p, "Du bist nun nicht mehr im Modmodus!");
 
                     ((Player) p).getInventory().clear();
                     ItemStack[] is = InvManager.inventory.get(((Player) p).getUniqueId());
@@ -32,12 +33,17 @@ public class ModModusCMD implements CommandExecutor {
 
                     }
                     InvManager.inventory.remove(((Player) p).getUniqueId());
+                    ((Player) p).setGameMode(GameMode.SURVIVAL);
                 } else {
                     mods.add((Player) p);
-                    Logger.sendPlayerMessage((Player) p, "Du bist im modmodus!");
+                    Logger.sendPlayerMessage((Player) p, "Du bist im Modmodus!");
 
                     InvManager.inventory.put(((Player) p).getUniqueId(), ((Player) p).getInventory().getContents());
                     ((Player) p).getInventory().clear();
+                    InvManager.givePlayerModItems(((Player) p).getPlayer());
+                    ((Player) p).setGameMode(GameMode.ADVENTURE);
+                    ((Player) p).setAllowFlight(true);
+                    ((Player) p).setFlying(true);
                 }
             } else {
                 Logger.sendPlayerError((Player) p, "Du darfst das nicht!");

@@ -17,13 +17,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class Modlistener implements Listener {
     @EventHandler
-    public void onPlaceEvent(BlockPlaceEvent event) {
-        if (ModModusCMD.mods.contains(event.getPlayer())) {
-            event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
     public void onModInvClick(InventoryClickEvent event) {
         if (ModModusCMD.mods.contains((Player) event.getWhoClicked())) {
             int slot = event.getSlot();

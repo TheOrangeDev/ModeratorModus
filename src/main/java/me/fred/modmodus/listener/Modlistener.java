@@ -1,7 +1,6 @@
 package me.fred.modmodus.listener;
 
 import me.fred.modmodus.cmds.ModModusCMD;
-import me.fred.modmodus.logger.Logger;
 import me.fred.modmodus.utils.InvManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -9,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +22,7 @@ public class Modlistener implements Listener {
 
             if (item.getType() == Material.BARRIER)
                 ((Player) event.getWhoClicked()).performCommand("modmodus");
+                //GuiListener.createInv(((Player) event.getWhoClicked()).getPlayer());
         }
     }
 

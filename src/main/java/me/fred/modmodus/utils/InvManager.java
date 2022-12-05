@@ -17,9 +17,10 @@ public class InvManager {
     public static void givePlayerModItems(Player p) {
         //Barrier
         giveBarrier(p);
-        //head
-        giveHead(p);
-
+        //self-options head
+        giveSelfHead(p);
+        //player-selector head
+        giveOtherHead(p);
     }
 
     private static void giveBarrier(Player p) {
@@ -34,7 +35,7 @@ public class InvManager {
         p.getInventory().setItem(8, exit);
     }
 
-    private static void giveHead(Player p) {
+    private static void giveSelfHead(Player p) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
         SkullMeta skull = (SkullMeta) item.getItemMeta();
         skull.setDisplayName("Self Options");
@@ -46,4 +47,15 @@ public class InvManager {
         p.getInventory().setItem(0, item);
     }
 
+    private static void giveOtherHead(Player p) {
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+        SkullMeta skull = (SkullMeta) item.getItemMeta();
+        skull.setDisplayName("Player-Selector");
+        ArrayList<String> lore = new ArrayList<String>();
+        lore.add("Rechtsklicke das Item, um einen Spieler auszuwählen.");
+        skull.setLore(lore);
+        skull.setOwner("default____user");
+        item.setItemMeta(skull);
+        p.getInventory().setItem(4, item);
+    }
 }

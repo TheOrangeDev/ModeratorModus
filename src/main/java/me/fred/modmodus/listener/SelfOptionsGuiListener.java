@@ -1,5 +1,6 @@
 package me.fred.modmodus.listener;
 
+import me.fred.modmodus.cmds.ModModusCMD;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -18,7 +19,7 @@ public class SelfOptionsGuiListener implements Listener{
     private final Inventory inv;
 
     public SelfOptionsGuiListener() {
-        inv = Bukkit.createInventory(null, 9, "Self Options");
+        inv = Bukkit.createInventory(null, 9, "§6Self Options");
         initItems();
 
     }
@@ -44,19 +45,19 @@ public class SelfOptionsGuiListener implements Listener{
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getInventory().equals(inv)) return;
+        if (ModModusCMD.mods.contains((Player) e.getWhoClicked())) {
+            e.setCancelled(true);
+            if (!e.getWhoClicked().getOpenInventory().getTitle().equals("§6Self Options")) return;
 
-        e.setCancelled(true);
+            final ItemStack clickedItem = e.getCurrentItem();
 
-        final ItemStack clickedItem = e.getCurrentItem();
+            if (clickedItem == null || clickedItem.getType().isAir()) return;
 
-        if (clickedItem == null || clickedItem.getType().isAir()) return;
-
-        final Player p = (Player) e.getWhoClicked();
-        if (e.getRawSlot() == 5) {
-            p.setHealth(20);
+            final Player p = (Player) e.getWhoClicked();
+            if (e.getRawSlot() == 4) {
+                p.setHealth(20);
+            }
         }
-        System.out.println(e.getRawSlot());
     }
 
 

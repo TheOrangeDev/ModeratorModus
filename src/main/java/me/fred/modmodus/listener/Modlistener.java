@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
@@ -16,20 +17,24 @@ import org.bukkit.inventory.ItemStack;
 public class Modlistener implements Listener {
     @EventHandler
     public void onModInvClick(InventoryClickEvent event) {
-        if (ModModusCMD.mods.contains((Player) event.getWhoClicked())) {
-            int slot = event.getSlot();
-            ItemStack item = event.getWhoClicked().getInventory().getItem(slot);
+        try {
+            if (ModModusCMD.mods.contains((Player) event.getWhoClicked())) {
+                int slot = event.getSlot();
+                ItemStack item = event.getWhoClicked().getInventory().getItem(slot);
 
-            if (item.getType() == Material.BARRIER)
-                ((Player) event.getWhoClicked()).performCommand("modmodus");
-            if (item.getType() == Material.PLAYER_HEAD) {
-                if (item.getItemMeta().getDisplayName().equals("Self Options")) {
-                    SelfOptionsGuiListener selfOptionsGuiListener = new SelfOptionsGuiListener();
-                    selfOptionsGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
-                } else {
+                if (item.getType() == Material.BARRIER)
+                    ((Player) event.getWhoClicked()).performCommand("modmodus");
+                if (item.getType() == Material.PLAYER_HEAD) {
+                    if (item.getItemMeta().getDisplayName().equals("Self Options")) {
+                        SelfOptionsGuiListener selfOptionsGuiListener = new SelfOptionsGuiListener();
+                        selfOptionsGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
+                    } else {
 
+                    }
                 }
             }
+        } catch (Exception e) {
+
         }
     }
 
@@ -48,6 +53,14 @@ public class Modlistener implements Listener {
             }
             InvManager.inventory.remove((Bukkit.getServer().getOfflinePlayer(event.getPlayer().getUniqueId()).getPlayer()).getUniqueId());
             Bukkit.getServer().getOfflinePlayer(event.getPlayer().getUniqueId()).getPlayer().setGameMode(GameMode.SURVIVAL);
+        }
+    }
+
+    @EventHandler
+    public void onDie(PlayerDeathEvent event) {
+        if (ModModusCMD.mods.contains(event.getEntity())) {
+            event.setKeepInventory(true);
+            event.getDrops().clear();
         }
     }
 }

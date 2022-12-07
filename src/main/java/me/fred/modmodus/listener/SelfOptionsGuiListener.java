@@ -7,7 +7,9 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,7 +27,7 @@ public class SelfOptionsGuiListener implements Listener{
     }
 
     public void initItems() {
-        inv.setItem(4 ,createGuiItem(Material.ENCHANTED_GOLDEN_APPLE, "Heilen", "Heile dich selbst!"));
+        inv.setItem(4 ,createGuiItem(Material.ENCHANTED_GOLDEN_APPLE, "§bHeilen", "Heile dich selbst!"));
     }
 
     protected ItemStack createGuiItem(final Material material, final String name, final String... lore) {
@@ -40,6 +42,7 @@ public class SelfOptionsGuiListener implements Listener{
     }
 
     public void openInventory(final HumanEntity ent) {
+        ent.closeInventory();
         ent.openInventory(inv);
     }
 
@@ -56,9 +59,25 @@ public class SelfOptionsGuiListener implements Listener{
             final Player p = (Player) e.getWhoClicked();
             if (e.getRawSlot() == 4) {
                 p.setHealth(20);
+                p.setFoodLevel(20);
             }
         }
     }
 
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+        try {
+            if (ModModusCMD.mods.contains((Player) e.getPlayer())) {
+                if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    if (e.getItem().getItemMeta().getDisplayName().equals("Self Options")) {
+                        openInventory(e.getPlayer());
+                    } else if (e.getItem().getItemMeta().getDisplayName().equals("Modmodus verlassen")) {
+                        e.getPlayer().performCommand("modmodus");
+                    }
+                }
+            }
+        }catch (Exception exception) {
 
+        }
+    }
 }

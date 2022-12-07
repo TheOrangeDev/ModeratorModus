@@ -13,26 +13,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
+//CREDITS https://www.spigotmc.org/wiki/creating-a-gui-inventory/
 public class SelfOptionsGuiListener implements Listener{
     private final Inventory inv;
 
     public SelfOptionsGuiListener() {
         inv = Bukkit.createInventory(null, 9, "Self Options");
+        initItems();
 
     }
 
     public void initItems() {
-
+        inv.setItem(4 ,createGuiItem(Material.ENCHANTED_GOLDEN_APPLE, "Heilen", "Heile dich selbst!"));
     }
 
     protected ItemStack createGuiItem(final Material material, final String name, final String... lore) {
         final ItemStack item = new ItemStack(material, 1);
         final ItemMeta meta = item.getItemMeta();
-
-        // Set the name of the item
         meta.setDisplayName(name);
-
-        // Set the lore of the item
         meta.setLore(Arrays.asList(lore));
 
         item.setItemMeta(meta);
@@ -40,26 +38,25 @@ public class SelfOptionsGuiListener implements Listener{
         return item;
     }
 
-    // You can open the inventory with this
     public void openInventory(final HumanEntity ent) {
         ent.openInventory(inv);
     }
 
-    // Check for clicks on items
     @EventHandler
-    public void onInventoryClick(final InventoryClickEvent e) {
+    public void onInventoryClick(InventoryClickEvent e) {
         if (!e.getInventory().equals(inv)) return;
 
         e.setCancelled(true);
 
         final ItemStack clickedItem = e.getCurrentItem();
 
-        // verify current item is not null
         if (clickedItem == null || clickedItem.getType().isAir()) return;
 
         final Player p = (Player) e.getWhoClicked();
-
-
+        if (e.getRawSlot() == 5) {
+            p.setHealth(20);
+        }
+        System.out.println(e.getRawSlot());
     }
 
 

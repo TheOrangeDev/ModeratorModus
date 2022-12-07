@@ -2,7 +2,7 @@ package me.fred.modmodus;
 
 import me.fred.modmodus.cmds.ModModusCMD;
 import me.fred.modmodus.listener.Modlistener;
-import me.fred.modmodus.listener.GuiListener;
+import me.fred.modmodus.listener.SelfOptionsGuiListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class ModModus extends JavaPlugin {
@@ -11,6 +11,7 @@ public final class ModModus extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getServer().getPluginManager().registerEvents(new Modlistener(), this);
+        this.getServer().getPluginManager().registerEvents(new SelfOptionsGuiListener(), this);
         this.getCommand("modmodus").setExecutor(new ModModusCMD());
     }
 

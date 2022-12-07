@@ -22,7 +22,14 @@ public class Modlistener implements Listener {
 
             if (item.getType() == Material.BARRIER)
                 ((Player) event.getWhoClicked()).performCommand("modmodus");
-                //GuiListener.createInv(((Player) event.getWhoClicked()).getPlayer());
+            if (item.getType() == Material.PLAYER_HEAD) {
+                if (item.getItemMeta().getDisplayName().equals("Self Options")) {
+                    SelfOptionsGuiListener selfOptionsGuiListener = new SelfOptionsGuiListener();
+                    selfOptionsGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
+                } else {
+
+                }
+            }
         }
     }
 

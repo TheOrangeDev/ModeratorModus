@@ -29,9 +29,11 @@ public class Modlistener implements Listener {
                     if (item.getItemMeta().getDisplayName().equals("Self Options")) {
                         SelfOptionsGuiListener selfOptionsGuiListener = new SelfOptionsGuiListener();
                         selfOptionsGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
-                    } else {
-
                     }
+                }
+                if (item.getType() == Material.COMPASS) {
+                    PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
+                    playerSelectorGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
                 }
             }
         } catch (Exception e) {
@@ -64,6 +66,4 @@ public class Modlistener implements Listener {
             event.getDrops().clear();
         }
     }
-
-
 }

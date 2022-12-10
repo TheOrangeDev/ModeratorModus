@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
@@ -29,14 +28,14 @@ public class PlayerSelectorGuiListener implements Listener{
     private static ArrayList<Player> selected_player = new ArrayList<>();
     public void initItems() {
         for (Player p : Bukkit.getOnlinePlayers()) {
-            inv.addItem(createGuiHead(p, "Auch bekannt als: " + p.getDisplayName()));
+            inv.addItem(createGuiHead(p, "Auch bekannt als: " + p.getName()));
         }
     }
 
     protected ItemStack createGuiHead(Player p, String... lore) {
         final ItemStack item = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta skull = (SkullMeta) item.getItemMeta();
-        skull.setDisplayName("Player-Selector");
+        skull.setDisplayName(p.getName());
         skull.setOwner(p.getName());
         skull.setLore(Arrays.asList(lore));
         item.setItemMeta(skull);
@@ -45,6 +44,7 @@ public class PlayerSelectorGuiListener implements Listener{
     }
 
     public void openInventory(final HumanEntity ent) {
+        ent.closeInventory();
         ent.openInventory(inv);
     }
 
@@ -62,8 +62,4 @@ public class PlayerSelectorGuiListener implements Listener{
 
         }
     }
-
-
-
-
 }

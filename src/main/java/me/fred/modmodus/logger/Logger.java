@@ -9,10 +9,9 @@ public class Logger {
     }
 
     public static void sendPlayerError(Player p, String text){
-        p.sendMessage("[" + ModModus.name + "] §c" + text);
-    }
+        p.sendMessage("[§c" + ModModus.name + "-ERROR §r] " + text);    }
 
     public static void sendPlayerMessage(Player p, String text){
-        p.sendMessage("[" + ModModus.name + "] §r" + text);
+        p.sendMessage("[§6" + ModModus.name + "§r] " + text);
     }
 }

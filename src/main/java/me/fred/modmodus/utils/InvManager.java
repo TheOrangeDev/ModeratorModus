@@ -48,14 +48,14 @@ public class InvManager {
     }
 
     private static void giveOtherHead(Player p) {
-        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-        SkullMeta skull = (SkullMeta) item.getItemMeta();
-        skull.setDisplayName("Player-Selector");
-        ArrayList<String> lore = new ArrayList<String>();
-        lore.add("Rechtsklicke das Item, um einen Spieler auszuwählen.");
-        skull.setLore(lore);
-        skull.setOwner("default____user");
-        item.setItemMeta(skull);
-        p.getInventory().setItem(4, item);
+        ItemStack exit = new ItemStack(Material.COMPASS);
+        ItemMeta em = exit.getItemMeta();
+        em.setDisplayName("Player-Selector");
+        ArrayList<String> menuLore = new ArrayList<>();
+        menuLore.add("Rechtsklicke das Item, um einen Spieler auszuwählen.");
+        em.setLore(menuLore);
+
+        exit.setItemMeta(em);
+        p.getInventory().setItem(8, exit);
     }
 }

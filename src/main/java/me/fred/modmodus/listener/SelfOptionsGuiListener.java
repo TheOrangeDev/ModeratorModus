@@ -57,10 +57,14 @@ public class SelfOptionsGuiListener implements Listener{
             if (clickedItem == null || clickedItem.getType().isAir()) return;
 
             final Player p = (Player) e.getWhoClicked();
-            if (e.getRawSlot() == 4) {
+
+
+
+            if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§bHeilen")) {
                 p.setHealth(20);
                 p.setFoodLevel(20);
             }
+            p.getOpenInventory().close();
         }
     }
 
@@ -71,8 +75,13 @@ public class SelfOptionsGuiListener implements Listener{
                 if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     if (e.getItem().getItemMeta().getDisplayName().equals("Self Options")) {
                         openInventory(e.getPlayer());
-                    } else if (e.getItem().getItemMeta().getDisplayName().equals("Modmodus verlassen")) {
+                    }
+                    if (e.getItem().getItemMeta().getDisplayName().equals("Modmodus verlassen")) {
                         e.getPlayer().performCommand("modmodus");
+                    }
+                    if (e.getItem().getItemMeta().getDisplayName().equals("Player-Selector")) {
+                        //PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
+                        //playerSelectorGuiListener.openInventory(((Player) e.getPlayer()));
                     }
                 }
             }

@@ -8,9 +8,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,14 +27,6 @@ public class Modlistener implements Listener {
 
                 if (item.getType() == Material.BARRIER)
                     ((Player) event.getWhoClicked()).performCommand("modmodus");
-                if (item.getType() == Material.PLAYER_HEAD) {
-                    SelfOptionsGuiListener selfOptionsGuiListener = new SelfOptionsGuiListener();
-                    selfOptionsGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
-                }
-                if (item.getType() == Material.COMPASS) {
-                    PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
-                    playerSelectorGuiListener.openInventory(((Player) event.getWhoClicked()).getPlayer());
-                }
             }
         } catch (Exception e) {
 
@@ -62,6 +56,30 @@ public class Modlistener implements Listener {
         if (ModModusCMD.mods.contains(event.getEntity())) {
             event.setKeepInventory(true);
             event.getDrops().clear();
+        }
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+        try {
+            if (e.getPlayer().getOpenInventory().getTitle().equals("§6Self Options")) return;
+            if (ModModusCMD.mods.contains((Player) e.getPlayer())) {
+                if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    if (e.getItem().getType() == Material.BEACON) {
+                        SelfOptionsGuiListener selfOptionsGuiListener = new SelfOptionsGuiListener();
+                        selfOptionsGuiListener.openInventory((Player) e.getPlayer());
+                    }
+                    if (e.getItem().getType() == Material.BARRIER) {
+                        e.getPlayer().performCommand("modmodus");
+                    }
+                    if (e.getItem().getType() == Material.COMPASS) {
+                        PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
+                        playerSelectorGuiListener.openInventory((Player) e.getPlayer());
+                    }
+                }
+            }
+        }catch (Exception exception) {
+
         }
     }
 }

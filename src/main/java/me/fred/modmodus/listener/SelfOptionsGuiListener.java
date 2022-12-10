@@ -7,9 +7,7 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -65,29 +63,6 @@ public class SelfOptionsGuiListener implements Listener{
                 p.setFoodLevel(20);
             }
             p.getOpenInventory().close();
-        }
-    }
-
-    @EventHandler
-    public void onInteract(PlayerInteractEvent e) {
-        try {
-            if (e.getPlayer().getOpenInventory().getTitle().equals("§6Self Options")) return;
-            if (ModModusCMD.mods.contains((Player) e.getPlayer())) {
-                if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    if (e.getItem().getItemMeta().getDisplayName().equals("Self Options")) {
-                        openInventory(e.getPlayer());
-                    }
-                    if (e.getItem().getType() == Material.BARRIER) {
-                        e.getPlayer().performCommand("modmodus");
-                    }
-                    if (e.getItem().getType() == Material.COMPASS) {
-                        PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
-                        playerSelectorGuiListener.openInventory(((Player) e.getPlayer()));
-                    }
-                }
-            }
-        }catch (Exception exception) {
-
         }
     }
 }

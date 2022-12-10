@@ -1,6 +1,7 @@
 package me.fred.modmodus.listener;
 
 import me.fred.modmodus.cmds.ModModusCMD;
+import me.fred.modmodus.logger.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
@@ -47,21 +48,15 @@ public class SelfOptionsGuiListener implements Listener{
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         if (ModModusCMD.mods.contains((Player) e.getWhoClicked())) {
-            e.setCancelled(true);
-            if (e.getWhoClicked().getOpenInventory().getTitle().equals("§6Self Options")) return;
-
             final ItemStack clickedItem = e.getCurrentItem();
-
             if (clickedItem == null || clickedItem.getType().isAir()) return;
-
             final Player p = (Player) e.getWhoClicked();
-
-
-
             if (e.getCurrentItem().getItemMeta().getDisplayName().equals("§bHeilen")) {
+                Logger.sendPlayerMessage((Player) e.getWhoClicked(), "Du wurdest geheilt!");
                 p.setHealth(20);
                 p.setFoodLevel(20);
             }
+            e.setCancelled(true);
             p.getOpenInventory().close();
         }
     }

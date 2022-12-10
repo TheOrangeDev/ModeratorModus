@@ -56,6 +56,6 @@ public class InvManager {
         em.setLore(menuLore);
 
         exit.setItemMeta(em);
-        p.getInventory().setItem(8, exit);
+        p.getInventory().setItem(4, exit);
     }
 }

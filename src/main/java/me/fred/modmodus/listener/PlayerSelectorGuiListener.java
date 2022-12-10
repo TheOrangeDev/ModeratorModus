@@ -52,14 +52,12 @@ public class PlayerSelectorGuiListener implements Listener{
     public void onInventoryClick(InventoryClickEvent e) {
         if (ModModusCMD.mods.contains((Player) e.getWhoClicked())) {
             e.setCancelled(true);
+            e.getWhoClicked().getOpenInventory().close();
             if (!e.getWhoClicked().getOpenInventory().getTitle().equals("§4Player Selector")) return;
 
             final ItemStack clickedItem = e.getCurrentItem();
 
             if (clickedItem == null || clickedItem.getType().isAir()) return;
-
-            final Player p = (Player) e.getWhoClicked();
-
         }
     }
 }

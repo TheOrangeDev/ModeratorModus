@@ -50,7 +50,7 @@ public class SelfOptionsGuiListener implements Listener{
     public void onInventoryClick(InventoryClickEvent e) {
         if (ModModusCMD.mods.contains((Player) e.getWhoClicked())) {
             e.setCancelled(true);
-            if (!e.getWhoClicked().getOpenInventory().getTitle().equals("§6Self Options")) return;
+            if (e.getWhoClicked().getOpenInventory().getTitle().equals("§6Self Options")) return;
 
             final ItemStack clickedItem = e.getCurrentItem();
 
@@ -71,17 +71,18 @@ public class SelfOptionsGuiListener implements Listener{
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         try {
+            if (e.getPlayer().getOpenInventory().getTitle().equals("§6Self Options")) return;
             if (ModModusCMD.mods.contains((Player) e.getPlayer())) {
                 if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     if (e.getItem().getItemMeta().getDisplayName().equals("Self Options")) {
                         openInventory(e.getPlayer());
                     }
-                    if (e.getItem().getItemMeta().getDisplayName().equals("Modmodus verlassen")) {
+                    if (e.getItem().getType() == Material.BARRIER) {
                         e.getPlayer().performCommand("modmodus");
                     }
-                    if (e.getItem().getItemMeta().getDisplayName().equals("Player-Selector")) {
-                        //PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
-                        //playerSelectorGuiListener.openInventory(((Player) e.getPlayer()));
+                    if (e.getItem().getType() == Material.COMPASS) {
+                        PlayerSelectorGuiListener playerSelectorGuiListener = new PlayerSelectorGuiListener();
+                        playerSelectorGuiListener.openInventory(((Player) e.getPlayer()));
                     }
                 }
             }
